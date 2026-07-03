@@ -125,7 +125,10 @@ export class StellarHelper {
     try {
       account = await this.server.getAccount(publicKey);
     } catch (e: any) {
-      throw new Error("Account not found on Testnet. Please fund your wallet first!");
+      if (e?.response?.status === 404) {
+        throw new Error("Account not found. Please fund your wallet first!");
+      }
+      throw new Error(`Failed to fetch account: ${e.message || "Network error"}`);
     }
 
     const tx = new TransactionBuilder(account, {
