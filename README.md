@@ -43,14 +43,14 @@ This project serves as a comprehensive submission for the Stellar Level 2 White 
 ## Required Links & Information
 
 - **Live Demo Link:** [Stellar Live Poll Vercel Deployment](https://stellar-live-poll-six.vercel.app/)
-- **Screenshot of Wallet Options:** ![Wallet Options Screenshot](demo/img/poll-grapichs-card.png) *(Note: Wallet selector supports Freighter, xBull, and Lobstr)*
+- **Screenshot of Wallet Options:** ![Wallet Options Screenshot](demo/img/multiple-wallet-connect-interface.png) *(Note: Wallet selector supports Freighter, xBull, and Lobstr)*
 - **Deployed Contract Address:** `CBBKRRX4JUV2WABG43LIBU77ZXSZ5D3RXLPXUJA4M3LQM7K2XLMOHWMJ`
 - **Transaction Hash:** [`386bd2d2f1b0e64329d8b1275f8bdc963c37719cb0767615801e7996ba2c4155`](https://stellar.expert/explorer/testnet/tx/386bd2d2f1b0e64329d8b1275f8bdc963c37719cb0767615801e7996ba2c4155)
 
 ## Visual Walkthrough
 
 ### Responsive Multi-Wallet Interface
-<img src="demo/img/poll-grapichs-card.png" alt="Poll Graphics Card" width="100%" />
+<img src="demo/img/multiple-wallet-connect-interface.png" alt="Multi Wallet Interface" width="100%" />
 
 ### Mobile Optimized View
 <img src="demo/img/mobile-responsive.png" alt="Mobile Responsive View" width="100%" />
