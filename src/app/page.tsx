@@ -23,7 +23,10 @@ export default function Home() {
     const h = new StellarHelper();
     setHelper(h);
     
+    let isFetching = false;
     const fetchAll = async () => {
+      if (isFetching) return;
+      isFetching = true;
       try {
         const [res, events] = await Promise.all([
           h.getResults(),
@@ -33,6 +36,8 @@ export default function Home() {
         setRecentVotes(events);
       } catch(e) {
         console.error(e);
+      } finally {
+        isFetching = false;
       }
     };
 
