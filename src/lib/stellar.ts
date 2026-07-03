@@ -149,10 +149,16 @@ export class StellarHelper {
     try {
       preparedTx = await this.server.prepareTransaction(tx);
     } catch (e: any) {
-      if (e.message?.includes("Error(Contract, #1)")) {
+      const msg = e.message || "";
+      if (
+        msg.includes("Error(Contract, #1)") || 
+        msg.includes("InvalidAction") || 
+        msg.includes("UnreachableCodeReached") || 
+        msg.includes("WasmVm")
+      ) {
         throw new Error("You have already voted!");
       }
-      throw new Error(`Transaction simulation failed: ${e.message}`);
+      throw new Error(`Transaction simulation failed: ${msg}`);
     }
 
     let signedTxXdr;
