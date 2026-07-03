@@ -3,6 +3,8 @@ import {
   Networks as WalletNetworks,
 } from '@creit.tech/stellar-wallets-kit';
 import { FreighterModule } from '@creit.tech/stellar-wallets-kit/modules/freighter';
+import { xBullModule } from '@creit.tech/stellar-wallets-kit/modules/xbull';
+import { LobstrModule } from '@creit.tech/stellar-wallets-kit/modules/lobstr';
 import { rpc, TransactionBuilder, Networks, Address, Contract, xdr, scValToNative } from '@stellar/stellar-sdk';
 
 export interface VoteEvent {
@@ -28,7 +30,11 @@ export class StellarHelper {
         StellarWalletsKit.init({
           network: walletNetwork,
           selectedWalletId: 'freighter',
-          modules: [new FreighterModule()],
+          modules: [
+            new FreighterModule(),
+            new xBullModule(),
+            new LobstrModule()
+          ],
         });
       } catch (e) {
       }
