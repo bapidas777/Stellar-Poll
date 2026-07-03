@@ -196,11 +196,13 @@ export class StellarHelper {
     const server = this.server;
     let status = await server.getTransaction(hash);
     
-    for (let i = 0; i < 15; i++) {
+    let delay = 1000;
+    for (let i = 0; i < 12; i++) {
         if (status.status !== 'NOT_FOUND') {
             break;
         }
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        delay = Math.min(delay * 1.5, 5000); // Exponential backoff up to 5s max
         status = await server.getTransaction(hash);
     }
 
