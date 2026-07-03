@@ -14,6 +14,9 @@ export function Toast({ status }: ToastProps) {
           animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
           exit={{ opacity: 0, y: 10, x: "-50%", scale: 0.9 }}
           className={`toast ${status.type}`}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
         >
           {status.type === 'error' && <AlertCircle size={20} style={{flexShrink: 0}} />}
           {status.type === 'success' && <Check size={20} style={{flexShrink: 0}} />}
