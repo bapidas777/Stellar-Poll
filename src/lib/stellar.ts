@@ -12,18 +12,21 @@ export interface VoteEvent {
   txHash: string;
 }
 
-export const CONTRACT_ADDRESS = "CDLCLCOYFQC2DXGHWGCST4FWQOANS3QBXPSC3P2Q3D4JXWCEC7HTF7KP";
+export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "CDLCLCOYFQC2DXGHWGCST4FWQOANS3QBXPSC3P2Q3D4JXWCEC7HTF7KP";
+export const RPC_URL = process.env.NEXT_PUBLIC_SOROBAN_RPC_URL || "https://soroban-testnet.stellar.org";
+export const NETWORK_PASSPHRASE = process.env.NEXT_PUBLIC_STELLAR_NETWORK_PASSPHRASE || Networks.TESTNET;
 
 export class StellarHelper {
   server: rpc.Server;
 
   constructor() {
-    this.server = new rpc.Server('https://soroban-testnet.stellar.org');
+    this.server = new rpc.Server(RPC_URL);
     
     if (typeof window !== 'undefined') {
       try {
+        const walletNetwork = NETWORK_PASSPHRASE === Networks.PUBLIC ? WalletNetworks.PUBLIC : WalletNetworks.TESTNET;
         StellarWalletsKit.init({
-          network: WalletNetworks.TESTNET,
+          network: walletNetwork,
           selectedWalletId: 'freighter',
           modules: [new FreighterModule()],
         });
@@ -42,7 +45,7 @@ export class StellarHelper {
     
     const tx = new TransactionBuilder(await this.getDummyAccount(), {
       fee: '100',
-      networkPassphrase: Networks.TESTNET,
+      networkPassphrase: NETWORK_PASSPHRASE,
     })
       .addOperation(contract.call('get_results'))
       .setTimeout(30)
@@ -120,7 +123,7 @@ export class StellarHelper {
 
     const tx = new TransactionBuilder(account, {
       fee: '1000',
-      networkPassphrase: Networks.TESTNET,
+      networkPassphrase: NETWORK_PASSPHRASE,
     })
       .addOperation(
         contract.call(
@@ -153,7 +156,7 @@ export class StellarHelper {
     let sendResponse;
     try {
       sendResponse = await this.server.sendTransaction(
-        TransactionBuilder.fromXDR(signedTxXdr, Networks.TESTNET)
+        TransactionBuilder.fromXDR(signedTxXdr, NETWORK_PASSPHRASE)
       );
     } catch (e: any) {
       console.error("Submit error:", e);
