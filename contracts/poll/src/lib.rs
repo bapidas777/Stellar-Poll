@@ -1,5 +1,11 @@
 #![no_std]
-use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, Address, Env};
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env};
+
+#[contracterror]
+#[derive(Copy, Clone, Eq, PartialEq, Debug)]
+pub enum PollError {
+    AlreadyVoted = 1,
+}
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -14,15 +20,17 @@ pub struct PollContract;
 
 #[contractimpl]
 impl PollContract {
-    pub fn vote(env: Env, voter: Address, choice: bool) {
+    pub fn vote(env: Env, voter: Address, choice: bool) -> Result<(), PollError> {
         voter.require_auth();
 
         let has_voted_key = DataKey::Voted(voter.clone());
-        if env.storage().persistent().has(&has_voted_key) {
-            panic!("Already voted");
+        if env.storage().temporary().has(&has_voted_key) {
+            return Err(PollError::AlreadyVoted);
         }
 
-        env.storage().persistent().set(&has_voted_key, &true);
+        env.storage().temporary().set(&has_voted_key, &true);
+        // Extend TTL to roughly 7 days (assuming ~5 seconds per ledger, 17280 * 7 ~ 120960 ledgers)
+        env.storage().temporary().extend_ttl(&has_voted_key, 1000, 120000);
 
         if choice {
             let mut yes_count: u32 = env.storage().persistent().get(&DataKey::YesCount).unwrap_or(0);
@@ -35,6 +43,7 @@ impl PollContract {
             env.storage().persistent().set(&DataKey::NoCount, &no_count);
             env.events().publish((symbol_short!("vote"), symbol_short!("no")), voter);
         }
+        Ok(())
     }
 
     pub fn get_results(env: Env) -> (u32, u32) {
