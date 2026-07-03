@@ -50,7 +50,7 @@ This project serves as a comprehensive submission for the Stellar Level 2 White 
 ## Visual Walkthrough
 
 ### Responsive Multi-Wallet Interface
-<img src="demo/img/multiple-wallet-connect-interface.png" alt="Multi Wallet Interface" width="100%" />
+<img src="demo/img/poll-grapichs-card.png" alt="Poll Graphics Card" width="100%" />
 
 ### Mobile Optimized View
 <img src="demo/img/mobile-responsive.png" alt="Mobile Responsive View" width="100%" />
