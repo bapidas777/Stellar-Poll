@@ -47,6 +47,24 @@ This project serves as a comprehensive submission for the Stellar Level 2 White 
 - **Deployed Contract Address:** `CBBKRRX4JUV2WABG43LIBU77ZXSZ5D3RXLPXUJA4M3LQM7K2XLMOHWMJ`
 - **Transaction Hash:** [`386bd2d2f1b0e64329d8b1275f8bdc963c37719cb0767615801e7996ba2c4155`](https://stellar.expert/explorer/testnet/tx/386bd2d2f1b0e64329d8b1275f8bdc963c37719cb0767615801e7996ba2c4155)
 
+## Visual Walkthrough
+
+### Responsive Multi-Wallet Interface
+<img src="demo/img/poll-grapichs-card.png" alt="Poll Graphics Card" width="100%" />
+
+### Mobile Optimized View
+<img src="demo/img/mobile-responsive.png" alt="Mobile Responsive View" width="100%" />
+
+### On-Chain Transaction Success
+<img src="demo/img/transaction-success.png" alt="Transaction Success Explorer" width="100%" />
+
+## Architecture Overview
+
+The application utilizes a robust client-serverless architecture:
+1. **Frontend Layer (Next.js):** Manages local state, animation, and UI rendering.
+2. **Integration Layer (Stellar SDK):** Handles contract parsing, XDR encoding, and wallet connection payloads.
+3. **Smart Contract Layer (Soroban):** Acts as the immutable backend, permanently storing the total votes and distribution logic on the Stellar blockchain.
+
 ## Project Structure
 
 ```text
