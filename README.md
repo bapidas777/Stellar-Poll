@@ -29,42 +29,23 @@ Stellar Live Poll is a modern, decentralized real-time polling application built
 - **Premium UX/UI:** Fluid result visualization and micro-interactions powered by Framer Motion and Tailwind CSS.
 - **Transaction Flow:** End-to-end transparent transaction signing, submission, and confirmation.
 
-## Challenge Requirements Fulfilled
+## Level 2 Challenge Submission Checklist
 
-This project serves as a comprehensive submission for the Stellar White Belt challenge, fulfilling all core criteria:
+This project serves as a comprehensive submission for the Stellar Level 2 White Belt challenge, fulfilling all core criteria:
 
-- [x] **Multi-wallet Integration:** Connected via Stellar Wallets Kit.
-- [x] **Smart Contract Deployment:** Custom Soroban contract deployed to Testnet.
-- [x] **Contract Interaction:** Frontend seamlessly calls contract functions to cast votes.
-- [x] **Transaction Status Visibility:** Toasts and activity feeds display on-chain success or failure.
-- [x] **Meaningful Commit History:** Clean, professional development history mirroring real-world workflows.
-- [x] **Comprehensive Error Handling:** Graceful fallback for rejections, missing wallets, and balance issues.
+- [x] **3 error types handled:** The smart contract throws and the UI gracefully decodes `AlreadyVoted`, `PollClosed`, and `InvalidOption`.
+- [x] **Contract deployed on testnet:** Custom Soroban contract deployed to Testnet (see below).
+- [x] **Contract called from the frontend:** The Next.js frontend calls `vote` and `get_results` natively using Soroban SDK.
+- [x] **Transaction status visible:** Animated toasts and activity feeds display on-chain success, pending states, or failure.
+- [x] **Minimum 2+ meaningful commits:** 10+ professional, atomic commits executed.
+- [x] **Multi-wallet app:** Connected via Stellar Wallets Kit (Freighter, xBull, Lobstr natively supported).
 
-## Visual Walkthrough
+## Required Links & Information
 
-### Connecting Wallet & The Poll Interface
-<img src="demo/img/poll-grapichs-card.png" alt="Poll Graphics Card" width="100%" />
-
-### On-Chain Transaction Success
-<img src="demo/img/transaction-success.png" alt="Transaction Success Explorer" width="100%" />
-
-## Architecture Overview
-
-The application utilizes a robust client-serverless architecture:
-1. **Frontend Layer (Next.js):** Manages local state, animation, and UI rendering.
-2. **Integration Layer (Stellar SDK):** Handles contract parsing, XDR encoding, and wallet connection payloads.
-3. **Smart Contract Layer (Soroban):** Acts as the immutable backend, permanently storing the total votes and distribution logic on the Stellar blockchain.
-
-## Smart Contract Information
-
-The live poll is driven by a decentralized smart contract on the test network:
-
-| Property | Value |
-| :--- | :--- |
-| **Network** | Stellar Testnet |
-| **Contract Address** | `CBUJH3VFKIKCAKJYIMEUWI4QOPSOBGUC6NESL7K6U6K7PGHTO323HYRS` |
-| **Transaction Hash** | [`252b30fc115ad1d130d164fe4e7be41ce9c03921596ece35c6ddfacc38c44287`](https://stellar.expert/explorer/testnet/tx/252b30fc115ad1d130d164fe4e7be41ce9c03921596ece35c6ddfacc38c44287) |
-| **Environment** | Soroban Environment |
+- **Live Demo Link:** [Stellar Live Poll Vercel Deployment](https://stellar-live-poll-six.vercel.app/)
+- **Screenshot of Wallet Options:** ![Wallet Options Screenshot](demo/img/poll-grapichs-card.png) *(Note: Wallet selector supports Freighter, xBull, and Lobstr)*
+- **Deployed Contract Address:** `CBBKRRX4JUV2WABG43LIBU77ZXSZ5D3RXLPXUJA4M3LQM7K2XLMOHWMJ`
+- **Transaction Hash:** [`386bd2d2f1b0e64329d8b1275f8bdc963c37719cb0767615801e7996ba2c4155`](https://stellar.expert/explorer/testnet/tx/386bd2d2f1b0e64329d8b1275f8bdc963c37719cb0767615801e7996ba2c4155)
 
 ## Project Structure
 
