@@ -54,16 +54,23 @@ export class StellarHelper {
     const prepared = await this.server.prepareTransaction(tx);
     const simulation = await this.server.simulateTransaction(prepared);
 
-    if (rpc.Api.isSimulationSuccess(simulation)) {
-        const resultXdr = simulation.result!.retval;
-        if (resultXdr.switch() === xdr.ScValType.scvVec()) {
-           const vec = resultXdr.vec()!;
-           const yes = vec[0].u32();
-           const no = vec[1].u32();
-           return { yes, no };
-        }
+    if (!rpc.Api.isSimulationSuccess(simulation) || !simulation.result?.retval) {
+      throw new Error("Unable to decode contract results or simulation failed");
     }
-    return { yes: 0, no: 0 };
+
+    const resultXdr = simulation.result.retval;
+    if (resultXdr.switch() !== xdr.ScValType.scvVec()) {
+      throw new Error("Unexpected contract return type");
+    }
+
+    const vec = resultXdr.vec()!;
+    if (vec.length < 2) {
+      throw new Error("Invalid tuple length from contract");
+    }
+    
+    const yes = vec[0].u32();
+    const no = vec[1].u32();
+    return { yes, no };
   }
 
   async getRecentVotes(): Promise<VoteEvent[]> {
