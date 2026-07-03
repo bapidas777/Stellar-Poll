@@ -49,7 +49,7 @@ This project serves as a comprehensive submission for the Stellar Level 2 White 
 
 ## Visual Walkthrough
 
-### Responsive Multi-Wallet Interface
+### The Polling Interface
 <img src="demo/img/poll-grapichs-card.png" alt="Poll Graphics Card" width="100%" />
 
 ### Mobile Optimized View
