@@ -5,6 +5,8 @@ use soroban_sdk::{contract, contracterror, contractimpl, contracttype, symbol_sh
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub enum PollError {
     AlreadyVoted = 1,
+    PollClosed = 2,
+    InvalidOption = 3,
 }
 
 #[contracttype]
@@ -13,6 +15,7 @@ pub enum DataKey {
     YesCount,
     NoCount,
     Voted(Address),
+    Closed,
 }
 
 #[contract]
@@ -20,8 +23,20 @@ pub struct PollContract;
 
 #[contractimpl]
 impl PollContract {
-    pub fn vote(env: Env, voter: Address, choice: bool) -> Result<(), PollError> {
+    pub fn close_poll(env: Env) {
+        env.storage().instance().set(&DataKey::Closed, &true);
+    }
+
+    pub fn vote(env: Env, voter: Address, choice: u32) -> Result<(), PollError> {
         voter.require_auth();
+
+        if env.storage().instance().has(&DataKey::Closed) {
+            return Err(PollError::PollClosed);
+        }
+
+        if choice != 0 && choice != 1 {
+            return Err(PollError::InvalidOption);
+        }
 
         let has_voted_key = DataKey::Voted(voter.clone());
         if env.storage().temporary().has(&has_voted_key) {
@@ -32,7 +47,7 @@ impl PollContract {
         // Extend TTL to roughly 7 days (assuming ~5 seconds per ledger, 17280 * 7 ~ 120960 ledgers)
         env.storage().temporary().extend_ttl(&has_voted_key, 1000, 120000);
 
-        if choice {
+        if choice == 1 {
             let mut yes_count: u32 = env.storage().persistent().get(&DataKey::YesCount).unwrap_or(0);
             yes_count += 1;
             env.storage().persistent().set(&DataKey::YesCount, &yes_count);

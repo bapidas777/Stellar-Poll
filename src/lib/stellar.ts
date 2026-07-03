@@ -145,7 +145,7 @@ export class StellarHelper {
         contract.call(
           'vote',
           new Address(publicKey).toScVal(),
-          xdr.ScVal.scvBool(choice)
+          xdr.ScVal.scvU32(choice ? 1 : 0)
         )
       )
       .setTimeout(30)
@@ -163,6 +163,12 @@ export class StellarHelper {
         msg.includes("WasmVm")
       ) {
         throw new Error("You have already voted!");
+      }
+      if (msg.includes("Error(Contract, #2)")) {
+        throw new Error("This poll is closed!");
+      }
+      if (msg.includes("Error(Contract, #3)")) {
+        throw new Error("Invalid voting option!");
       }
       throw new Error(`Transaction simulation failed: ${msg}`);
     }
