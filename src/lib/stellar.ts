@@ -46,6 +46,18 @@ export class StellarHelper {
     return result.address;
   }
 
+  async getBalance(publicKey: string): Promise<string> {
+    try {
+      const res = await fetch(`https://horizon-testnet.stellar.org/accounts/${publicKey}`);
+      if (!res.ok) return "0.00";
+      const data = await res.json();
+      const nativeBalance = data.balances.find((b: any) => b.asset_type === 'native');
+      return nativeBalance ? nativeBalance.balance : "0.00";
+    } catch (e) {
+      return "0.00";
+    }
+  }
+
   async getResults(): Promise<{ yes: number; no: number }> {
     const contract = new Contract(CONTRACT_ADDRESS);
     

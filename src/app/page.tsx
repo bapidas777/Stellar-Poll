@@ -12,6 +12,7 @@ import "./globals.css";
 export default function Home() {
   const [helper, setHelper] = useState<StellarHelper | null>(null);
   const [publicKey, setPublicKey] = useState<string | null>(null);
+  const [balance, setBalance] = useState<string | null>(null);
   const [results, setResults] = useState({ yes: 0, no: 0 });
   const [recentVotes, setRecentVotes] = useState<VoteEvent[]>([]);
   const [loading, setLoading] = useState(false);
@@ -22,6 +23,11 @@ export default function Home() {
   useEffect(() => {
     const h = new StellarHelper();
     setHelper(h);
+
+    const savedPk = localStorage.getItem('connected_wallet');
+    if (savedPk) {
+      setPublicKey(savedPk);
+    }
     
     let isFetching = false;
     const fetchAll = async () => {
@@ -46,6 +52,15 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (publicKey && helper) {
+      localStorage.setItem('connected_wallet', publicKey);
+      helper.getBalance(publicKey).then(b => setBalance(parseFloat(b).toFixed(2)));
+    } else {
+      setBalance(null);
+    }
+  }, [publicKey, helper]);
+
   const connectWallet = async () => {
     if (!helper) return;
     try {
@@ -67,6 +82,7 @@ export default function Home() {
 
   const disconnectWallet = () => {
     setPublicKey(null);
+    localStorage.removeItem('connected_wallet');
     setStatus({ type: 'success', message: "Wallet disconnected successfully." });
   };
 
@@ -112,6 +128,7 @@ export default function Home() {
       
       <Navbar 
         publicKey={publicKey} 
+        balance={balance}
         loading={loading} 
         connectWallet={connectWallet} 
         disconnectWallet={disconnectWallet} 

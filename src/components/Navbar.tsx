@@ -3,12 +3,13 @@ import { Wallet, Loader2, LogOut } from "lucide-react";
 
 interface NavbarProps {
   publicKey: string | null;
+  balance: string | null;
   loading: boolean;
   connectWallet: () => void;
   disconnectWallet: () => void;
 }
 
-export function Navbar({ publicKey, loading, connectWallet, disconnectWallet }: NavbarProps) {
+export function Navbar({ publicKey, balance, loading, connectWallet, disconnectWallet }: NavbarProps) {
   const [isHoveringWallet, setIsHoveringWallet] = useState(false);
 
   return (
@@ -32,8 +33,11 @@ export function Navbar({ publicKey, loading, connectWallet, disconnectWallet }: 
               borderColor: isHoveringWallet ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 255, 255, 0.1)', 
               color: isHoveringWallet ? '#fca5a5' : 'var(--primary-text)', 
               transition: 'all 0.2s', 
-              width: '150px', 
-              justifyContent: 'center' 
+              width: balance ? '220px' : '150px', 
+              justifyContent: 'center',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
             }} 
           >
             {isHoveringWallet ? (
@@ -44,7 +48,10 @@ export function Navbar({ publicKey, loading, connectWallet, disconnectWallet }: 
             ) : (
               <>
                 <Wallet size={16} />
-                {publicKey.slice(0, 4)}...{publicKey.slice(-4)}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.2 }}>
+                  <span style={{ fontSize: '0.85rem' }}>{publicKey.slice(0, 4)}...{publicKey.slice(-4)}</span>
+                  {balance && <span style={{ fontSize: '0.7rem', color: 'var(--secondary-text)' }}>{balance} XLM</span>}
+                </div>
               </>
             )}
           </button>
