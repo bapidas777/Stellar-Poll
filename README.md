@@ -29,7 +29,7 @@ Stellar Live Poll is a modern, decentralized real-time polling application built
 - **Premium UX/UI:** Fluid result visualization and micro-interactions powered by CSS and Tailwind CSS, featuring a beautiful "Cotton Candy" glassmorphism aesthetic.
 - **Transaction Flow:** End-to-end transparent transaction signing, submission, and confirmation with Stellar Expert links.
 
-## 🏆 Challenge Submission Checklist
+## Challenge Submission Checklist
 
 This project serves as a comprehensive submission for the Stellar White Belt challenge, fulfilling all core criteria:
 
@@ -40,7 +40,7 @@ This project serves as a comprehensive submission for the Stellar White Belt cha
 - [x] **Minimum 2+ meaningful commits:** Professional, atomic commits executed.
 - [x] **Multi-wallet app:** Connected via Stellar Wallets Kit.
 
-## 🔗 Required Links & Information
+## Required Links & Information
 
 - **Live Demo Link:** [Stellar Live Poll Vercel Deployment](https://stellar-poll-rho.vercel.app/)
 - **Screenshot of Wallet Options:** 
@@ -81,7 +81,7 @@ stellar-live-poll/
 └── package.json       # Project dependencies and scripts
 ```
 
-## 🚀 Local Setup Instructions
+## Local Setup Instructions
 
 To run this application locally, ensure you have Node.js installed, then execute the following commands:
 
