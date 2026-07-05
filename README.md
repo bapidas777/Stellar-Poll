@@ -6,13 +6,14 @@
   <p align="center">
     <strong>A decentralized real-time polling application powered by Soroban Smart Contracts.</strong>
   </p>
+</div>
 
-  <p align="center">
-    <a href="https://stellar-poll-rho.vercel.app/"><strong>Live Demo</strong></a><br><br>
-    <a href="#challenge-submission-checklist">Challenge Submission</a> •
-    <a href="#required-links--information">View Contract</a> •
-    <a href="#local-setup-instructions">Get Started</a>
-  </p>
+<div align="center">
+
+[**Live Demo**](https://stellar-poll-rho.vercel.app/)
+
+[Challenge Submission](#challenge-submission-checklist) • [View Contract](#required-links--information) • [Get Started](#local-setup-instructions)
+
 </div>
 
 ---
