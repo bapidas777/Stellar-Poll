@@ -1,53 +1,20 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-
-const words = ["Here.", "Transparent.", "Immutable.", "Verifiable."];
-
-export function Hero() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
+export function Hero({ totalVotes }: { totalVotes: number }) {
   return (
-    <section className="hero-section">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
-        <span className="hero-badge" style={{ boxShadow: '0 0 20px rgba(255,255,255,0.1)' }}>On-Chain Governance</span>
-        <h1 className="hero-title" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.3em' }}>
-          <span>The Future of Finance is</span>
-          <span style={{ position: 'relative', display: 'inline-block', minWidth: '220px', height: '1.2em', textAlign: 'left' }}>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: -15, filter: 'blur(4px)' }}
-                transition={{ duration: 0.4 }}
-                style={{ 
-                  position: 'absolute', 
-                  left: 0, 
-                  color: '#34d399', 
-                  WebkitTextFillColor: '#34d399',
-                  textShadow: '0 0 20px rgba(52,211,153,0.4)' 
-                }}
-              >
-                {words[index]}
-              </motion.span>
-            </AnimatePresence>
-          </span>
-        </h1>
-        <p className="hero-subtitle">
-          Participate in the live network consensus. Cast your vote seamlessly 
-          using your Freighter wallet directly on the Stellar Soroban Testnet.
-          Fully decentralized and transparent.
+    <div className="relative w-full aspect-[4/3] rounded-bubble shadow-puffy overflow-hidden border-2 border-white/50 glass-panel flex items-center justify-center animate-float motion-reduce:animate-none transform-gpu group">
+      
+      <div className="absolute inset-0 z-0 opacity-80 mix-blend-multiply">
+        <div className="w-full h-full magic-gradient"></div>
+      </div>
+      
+      <div className="relative z-10 flex flex-col items-center text-center p-8 backdrop-blur-sm bg-white/10 rounded-[30%] border border-white/20 shadow-puffy-sm transition-all duration-500 hover:shadow-inner-puffy group-hover:scale-105">
+        <span className="material-symbols-outlined text-5xl md:text-6xl text-on-primary drop-shadow-md mb-2 transition-transform duration-500 group-hover:rotate-12" style={{ fontVariationSettings: "'FILL' 1" }}>how_to_vote</span>
+        <h1 className="text-headline-xl-mobile md:text-headline-xl font-headline-xl text-on-primary drop-shadow-lg mb-2">Active Proposal</h1>
+        <p className="text-body-md md:text-body-lg font-body-lg text-white font-medium max-w-xs drop-shadow-md">
+          {totalVotes > 0 ? `${totalVotes} votes cast so far.` : "Be the first to vote on this network proposal."}
         </p>
-      </motion.div>
-    </section>
+      </div>
+    </div>
   );
 }
