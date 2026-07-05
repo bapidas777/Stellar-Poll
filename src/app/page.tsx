@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Poll } from "@/components/Poll";
 import { ActivityFeed } from "@/components/ActivityFeed";
+import { Stats } from "@/components/Stats";
 import { Toast } from "@/components/Toast";
 import "./globals.css";
 
@@ -124,8 +125,6 @@ export default function Home() {
 
   return (
     <>
-      <div className="ambient-light" />
-      
       <Navbar 
         publicKey={publicKey} 
         balance={balance}
@@ -133,31 +132,57 @@ export default function Home() {
         connectWallet={connectWallet} 
         disconnectWallet={disconnectWallet} 
       />
+      <main className="flex-grow w-full max-w-7xl mx-auto px-container-padding py-4 relative mt-4">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-secondary-container/30 rounded-full blur-3xl animate-float pointer-events-none -z-10"></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-primary-container/30 rounded-full blur-3xl animate-float pointer-events-none -z-10" style={{ animationDelay: '-3s' }}></div>
+        <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-[rgba(230,230,250,0.4)] rounded-full blur-2xl animate-float pointer-events-none -z-10" style={{ animationDelay: '-1.5s' }}></div>
 
-      <main className="main-content">
-        <Hero />
-        
-        <Poll 
-          totalVotes={totalVotes}
-          yesPercentage={yesPercentage}
-          publicKey={publicKey}
-          voteLoading={voteLoading}
-          handleVote={handleVote}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10">
+          
+          {/* Main Content (Poll) - First on mobile, Center on desktop */}
+          <section className="md:col-span-6 flex flex-col gap-4 opacity-0 animate-fade-in-up order-1 md:order-2" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
+            <Hero totalVotes={totalVotes} />
+            
+            <Poll 
+              totalVotes={totalVotes}
+              yesPercentage={yesPercentage}
+              publicKey={publicKey}
+              voteLoading={voteLoading}
+              handleVote={handleVote}
+            />
+          </section>
 
-        <ActivityFeed recentVotes={recentVotes} />
+          {/* Left Sidebar - Third on mobile, Left on desktop */}
+          <aside className="md:col-span-3 flex flex-col gap-4 opacity-0 animate-fade-in-up order-3 md:order-1" style={{ animationFillMode: 'forwards' }}>
+            <ActivityFeed recentVotes={recentVotes} />
+          </aside>
 
-        <footer className="footer">
-          <p>© {new Date().getFullYear()} SorobanPoll. Built on the Stellar Network.</p>
-          <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
-            <a href="https://developers.stellar.org/docs/smart-contracts" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--secondary-text)', textDecoration: 'none' }}>Documentation</a>
-            <a href="https://github.com/late-cat/Stellar-Live-Poll" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--secondary-text)', textDecoration: 'none' }}>Source Code</a>
-            <a href="https://stellar.expert/explorer/testnet/contract/CDLCLCOYFQC2DXGHWGCST4FWQOANS3QBXPSC3P2Q3D4JXWCEC7HTF7KP" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--secondary-text)', textDecoration: 'none' }}>Testnet Explorer</a>
-          </div>
-        </footer>
+          {/* Right Sidebar - Second on mobile, Right on desktop */}
+          <aside className="md:col-span-3 flex flex-col gap-4 opacity-0 animate-fade-in-up order-2 md:order-3" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
+            <Stats totalVotes={totalVotes} yesPercentage={yesPercentage} />
+          </aside>
+        </div>
 
         <Toast status={status} />
       </main>
+
+      <footer className="bg-surface-container-low dark:bg-inverse-surface shadow-inner-puffy w-full rounded-t-[48px] mt-16 z-10 relative">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full px-container-padding py-12 max-w-7xl mx-auto">
+          <div className="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary-fixed-dim mb-4 md:mb-0 flex items-center gap-2 hover:scale-105 transition-transform duration-300">
+            <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+            Stellar Poll
+          </div>
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-6 md:mb-0">
+            <a className="text-on-tertiary-container text-label-sm font-label-sm hover:text-secondary transition-colors duration-200 hover:scale-[1.05]" href="#">Ecosystem</a>
+            <a className="text-on-tertiary-container text-label-sm font-label-sm hover:text-secondary transition-colors duration-200 hover:scale-[1.05]" href="#">Governance</a>
+            <a className="text-on-tertiary-container text-label-sm font-label-sm hover:text-secondary transition-colors duration-200 hover:scale-[1.05]" href="#">Audit</a>
+            <a className="text-on-tertiary-container text-label-sm font-label-sm hover:text-secondary transition-colors duration-200 hover:scale-[1.05]" href="#">Manifesto</a>
+          </nav>
+          <div className="text-label-sm font-label-sm text-tertiary text-center md:text-right">
+            © {new Date().getFullYear()} Stellar Poll. Hand-woven for the Decentralized Web.
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
