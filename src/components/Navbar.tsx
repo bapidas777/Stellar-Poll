@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Wallet, Loader2, LogOut } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 interface NavbarProps {
   publicKey: string | null;
@@ -13,55 +13,55 @@ export function Navbar({ publicKey, balance, loading, connectWallet, disconnectW
   const [isHoveringWallet, setIsHoveringWallet] = useState(false);
 
   return (
-    <nav className="navbar">
-      <div className="nav-brand">
-        <div className="status-dot" style={{ position: 'relative', display: 'inline-block', marginRight: '8px' }} />
-        SorobanPoll
+    <header className="bg-surface/80 backdrop-blur-md top-0 z-50 border-b border-border-glass shadow-puffy-sm sticky w-full">
+      <div className="flex justify-between items-center w-full px-container-padding py-4 max-w-7xl mx-auto">
+        
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+          <span className="text-headline-md font-headline-md font-black tracking-tight text-primary">Stellar Poll</span>
+        </div>
+        
+        <div className="flex items-center gap-6">
+          <div className="hidden md:flex gap-6">
+          </div>
+          
+          {publicKey ? (
+            <button 
+              onClick={disconnectWallet} 
+              onMouseEnter={() => setIsHoveringWallet(true)}
+              onMouseLeave={() => setIsHoveringWallet(false)}
+              className="bg-primary-container text-on-primary-container px-6 py-2 rounded-full shadow-puffy-sm hover:scale-105 transition-all duration-300 active:scale-95 ease-in-out font-label-lg text-label-lg flex items-center gap-2"
+              style={{
+                background: isHoveringWallet ? 'rgba(186, 26, 26, 0.1)' : undefined,
+                color: isHoveringWallet ? '#ba1a1a' : undefined,
+              }}
+            >
+              {isHoveringWallet ? (
+                <>
+                  <span className="material-symbols-outlined text-sm">logout</span> Disconnect
+                </>
+              ) : (
+                <>
+                  <span className="material-symbols-outlined text-sm">account_balance_wallet</span>
+                  <div className="flex flex-col items-start leading-none">
+                    <span className="text-sm font-bold">{publicKey.slice(0, 4)}...{publicKey.slice(-4)}</span>
+                    {balance && <span className="text-[10px] opacity-80 font-normal">{balance} XLM</span>}
+                  </div>
+                </>
+              )}
+            </button>
+          ) : (
+            <button 
+              onClick={connectWallet} 
+              disabled={loading} 
+              className="bg-primary-container text-on-primary-container px-4 py-2 md:px-6 md:py-2 rounded-full shadow-puffy-sm hover:scale-105 hover:text-primary transition-all duration-300 active:scale-95 ease-in-out font-label-lg text-label-sm md:text-label-lg flex items-center gap-2 whitespace-nowrap"
+            >
+              {loading ? <Loader2 className="animate-spin w-4 h-4" /> : <span className="material-symbols-outlined text-sm">account_balance_wallet</span>}
+              Connect
+            </button>
+          )}
+        </div>
       </div>
-      <div className="nav-links">
-        <a href="#poll" className="nav-link">Live Poll</a>
-        <a href="#history" className="nav-link">Recent Activity</a>
-        {publicKey ? (
-          <button 
-            onClick={disconnectWallet} 
-            onMouseEnter={() => setIsHoveringWallet(true)}
-            onMouseLeave={() => setIsHoveringWallet(false)}
-            className="wallet-badge" 
-            style={{ 
-              cursor: 'pointer', 
-              background: isHoveringWallet ? 'rgba(239, 68, 68, 0.15)' : 'rgba(255, 255, 255, 0.08)', 
-              borderColor: isHoveringWallet ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 255, 255, 0.1)', 
-              color: isHoveringWallet ? '#fca5a5' : 'var(--primary-text)', 
-              transition: 'all 0.2s', 
-              width: balance ? '220px' : '150px', 
-              justifyContent: 'center',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
-            }} 
-          >
-            {isHoveringWallet ? (
-              <>
-                <LogOut size={16} />
-                Disconnect
-              </>
-            ) : (
-              <>
-                <Wallet size={16} />
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.2 }}>
-                  <span style={{ fontSize: '0.85rem' }}>{publicKey.slice(0, 4)}...{publicKey.slice(-4)}</span>
-                  {balance && <span style={{ fontSize: '0.7rem', color: 'var(--secondary-text)' }}>{balance} XLM</span>}
-                </div>
-              </>
-            )}
-          </button>
-        ) : (
-          <button onClick={connectWallet} disabled={loading} className="btn-connect">
-            {loading ? <Loader2 className="icon-spin" size={16} /> : <Wallet size={16} />}
-            Connect
-          </button>
-        )}
-      </div>
-    </nav>
+    </header>
   );
 }
