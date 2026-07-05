@@ -8,6 +8,7 @@
   </p>
 
   <p align="center">
+    <a href="https://stellar-poll-rho.vercel.app/"><strong>Live Demo</strong></a><br><br>
     <a href="#challenge-submission-checklist">Challenge Submission</a> •
     <a href="#required-links--information">View Contract</a> •
     <a href="#local-setup-instructions">Get Started</a>
@@ -41,6 +42,7 @@ This project serves as a comprehensive submission for the Stellar White Belt cha
 
 ## 🔗 Required Links & Information
 
+- **Live Demo Link:** [Stellar Live Poll Vercel Deployment](https://stellar-poll-rho.vercel.app/)
 - **Screenshot of Wallet Options:** 
   
   <img src="demo/img/multiple-wallet.png" alt="Wallet Options Screenshot" width="400" />
