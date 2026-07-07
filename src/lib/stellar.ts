@@ -114,7 +114,6 @@ export class StellarHelper {
         try {
           if (event.topic.length < 2) continue;
           
-          // Use scValToNative to parse symbols safely across Node and Browser environments
           const t1 = scValToNative(event.topic[0]) as string;
           if (t1 !== "vote") continue;
           
@@ -233,7 +232,7 @@ export class StellarHelper {
             break;
         }
         await new Promise((resolve) => setTimeout(resolve, delay));
-        delay = Math.min(delay * 1.5, 5000); // Exponential backoff up to 5s max
+        delay = Math.min(delay * 1.5, 5000);
         status = await server.getTransaction(hash);
     }
 

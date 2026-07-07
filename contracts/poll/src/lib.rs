@@ -44,7 +44,6 @@ impl PollContract {
         }
 
         env.storage().temporary().set(&has_voted_key, &true);
-        // Extend TTL to roughly 7 days (assuming ~5 seconds per ledger, 17280 * 7 ~ 120960 ledgers)
         env.storage().temporary().extend_ttl(&has_voted_key, 1000, 120000);
 
         if choice == 1 {
