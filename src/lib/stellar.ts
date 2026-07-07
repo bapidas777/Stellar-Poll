@@ -114,10 +114,11 @@ export class StellarHelper {
         try {
           if (event.topic.length < 2) continue;
           
-          const t1 = event.topic[0].sym().toString();
+          // Use scValToNative to parse symbols safely across Node and Browser environments
+          const t1 = scValToNative(event.topic[0]) as string;
           if (t1 !== "vote") continue;
           
-          const choice = event.topic[1].sym().toString();
+          const choice = scValToNative(event.topic[1]) as string;
           const voter = scValToNative(event.value) as string;
           
           votes.push({
